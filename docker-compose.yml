@@ -1,0 +1,25 @@
+version: '3'
+
+services:
+  app:
+    image: 'bolshakovmi/chgk:0.0.1'
+    ports:
+      - "8080:8080"
+    container_name: app
+    depends_on:
+      - db
+    environment:
+      - SPRING_DATASOURCE_URL=jdbc:postgresql://db:5432/chgk_db
+
+  db:
+    image: 'postgres:13.1-alpine'
+    restart: always
+    container_name: db
+    environment:
+      - POSTGRES_USER=chgk_admin
+      - POSTGRES_PASSWORD=chgk2024
+      - POSTGRES_DB=chgk_db
+    volumes:
+      - db_data:/var/lib/postgresql/data
+volumes:
+  db_data:
